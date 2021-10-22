@@ -112,7 +112,11 @@ int main() {
 		FILE* result_text;
 		result_text = fopen("result text.txt", "w");
 		fputs(text.c_str(), result_text);
-		cout << text;
+		//cout << text;
+		FILE* result;
+		result = fopen("encript text.txt", "w");
+		fputs(text.c_str(), result);
+		fclose(result);
 	}
 
 	return 0;
