@@ -21,10 +21,10 @@ int main() {
 		string path_to_picture, path_to_text;
 		cout << "Введите путь к файлу (картинка):\n";
 		cin >> path_to_picture;
-		path_to_picture = "1.bmp";
+		//path_to_picture = "1.bmp";
 		cout << "Введите путь к файлу (текст):\n";
 		cin >> path_to_text;
-		path_to_text = "1.txt";
+		//path_to_text = "1.txt";
 
 		picture = fopen(path_to_picture.c_str(), "rb");
 		text = fopen(path_to_text.c_str(), "r");
@@ -90,7 +90,7 @@ int main() {
 		string path_to_picture;
 		cout << "Path (picture):" << endl;
 		cin >> path_to_picture;
-		path_to_picture = "res.bmp";
+		//path_to_picture = "res.bmp";
 
 		picture = fopen(path_to_picture.c_str(), "rb");
 		fseek(picture, 0, SEEK_END);
@@ -109,6 +109,9 @@ int main() {
 			cur_pic = fgetc(picture);
 			text += cur_pic;
 		}
+		FILE* result_text;
+		result_text = fopen("result text.txt", "w");
+		fputs(text.c_str(), result_text);
 		cout << text;
 	}
 
