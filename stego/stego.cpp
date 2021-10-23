@@ -45,7 +45,7 @@ int main() {
 		bool buf[8];
 		unsigned char cur_pic;
 		// 54 байта - заголовок файла
-		for (int i = 0; i < 54; i++) {
+		for (int i = 0; i < 38; i++) {
 			cur_pic = fgetc(picture);
 			fputc(cur_pic, result_picture);
 			count--;
@@ -101,22 +101,22 @@ int main() {
 		bool buf[8], sym[8];
 		unsigned char cur_pic;
 
-		for (int i = 0; i < 54; i++) {
+		for (int i = 0; i < 38; i++) {
 			cur_pic = fgetc(picture);
 			count--;
 		}
-		for (int i = 54; i < 93; i++) {
+		for (int i = 38; i < 120; i++) {
 			cur_pic = fgetc(picture);
 			text += cur_pic;
 		}
 		FILE* result_text;
 		result_text = fopen("result text.txt", "w");
 		fputs(text.c_str(), result_text);
-		//cout << text;
-		FILE* result;
+		cout << text;
+		/*FILE* result;
 		result = fopen("encript text.txt", "w");
 		fputs(text.c_str(), result);
-		fclose(result);
+		fclose(result);*/
 	}
 
 	return 0;
