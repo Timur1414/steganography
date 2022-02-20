@@ -19,10 +19,10 @@ void hide() {
 
 	// пути к файлам 
 	string path_to_picture, path_to_text;
-	cout << "Введите путь к файлу (картинка):\n";
+	cout << "Введите название файла (картинка):\n";
 	cin >> path_to_picture;
 	path_to_picture = "1.bmp";
-	cout << "Введите путь к файлу (текст):\n";
+	cout << "Введите название файла (текст):\n";
 	cin >> path_to_text;
 	path_to_text = "1.txt";
 
@@ -44,8 +44,10 @@ void hide() {
 	count = len_of_picture;
 	bool buf[8];
 	unsigned char cur_pic;
-	// 38 байта - заголовок файла
-	for (int i = 0; i < 38; i++) {
+	// 14 байт - заголовок файла + 20 - заголовок растровой информации (важная инфа для запуска) (max - 40)
+	// (6 - 9 биты зарезервированы -> их тоже можно использовать, но длинна входного текста очень мала)
+	// все числа в 16 сс
+	for (int i = 0; i < 14 + 20; i++) {
 		cur_pic = fgetc(picture);
 		fputc(cur_pic, result_picture);
 		count--;
@@ -87,7 +89,7 @@ void show() {
 	string text; // спрятанный текст
 
 	string path_to_picture;
-	cout << "Path (picture):" << endl;
+	cout << "Введите название файла (картинка):" << endl;
 	cin >> path_to_picture;
 	path_to_picture = "res.bmp";
 
@@ -99,9 +101,9 @@ void show() {
 	bool buf[8], sym[8];
 	unsigned char cur_pic;
 
-	for (int i = 0; i < 38; i++)
+	for (int i = 0; i < 14; i++)
 		cur_pic = fgetc(picture);
-	for (int i = 38; i < 120; i++) {
+	for (int i = 14; i < 120; i++) {
 		cur_pic = fgetc(picture);
 		text += cur_pic;
 	}
@@ -123,10 +125,10 @@ void compare() {
 	string text2;
 
 	string path1, path2;
-	cout << "Path (original): " << endl;
+	cout << "Введите название файла 1: " << endl;
 	cin >> path1;
 	path1 = "1.bmp";
-	cout << "Path (checking for hidden text): " << endl;
+	cout << "Введите название файла 2: " << endl;
 	cin >> path2;
 	path2 = "res.bmp";
 	picture1 = fopen(path1.c_str(), "rb");
@@ -145,13 +147,13 @@ void compare() {
 	}
 
 	if (text1 == text2)
-		cout << "The files are the same";
+		cout << "Файлы одинаковые";
 	else {
 		string hidden;
 		for (int i = 0; i < text1.length(); i++)
 			if (text1[i] != text2[i])
 				hidden += text2[i];
-		cout << "In file2: " << endl;
+		cout << "В файле 2 спрятан текст: " << endl;
 		cout << hidden;
 	}
 }
