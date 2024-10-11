@@ -323,6 +323,38 @@ public:
 
 		cout << result;
 	}
+
+	void test_lsb(int* arr, const int n, string text) {
+		len_of_text = text.length();
+		int i = 0;
+		while (len_of_text) {
+			unsigned char letter = text[i];
+			bool sym[8];
+			// перевод буквы в формат 8-ми битов
+			for (int i = 0; i < 8; i++) {
+				sym[i] = letter % 2;
+				letter /= 2;
+			}
+			for (int i = 0; i < 8; i++) {
+				unsigned char cur_pic = arr[i];
+				bool buf[8];
+				// перевод пикселя в 8-ми битный формат
+				for (int j = 0; j < 8; j++) {
+					buf[j] = cur_pic % 2;
+					cur_pic /= 2;
+				}
+				// изменение последнего бита
+				buf[7] = sym[i];
+				// запись изменённого бита
+				cur_pic = 0;
+				for (int j = 0; j < 8; j++)
+					cur_pic += buf[j] * (1 << j);
+				arr[i] = cur_pic;
+			}
+			i++;
+			len_of_text--;
+		}
+	}
 };
 
 
