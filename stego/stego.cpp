@@ -23,21 +23,16 @@ private:
 
 public:
 	Model() {
+		// конструктор класса
 		len_of_picture = 0;
 		len_of_text = 0;
 		count = 0;
 		text_str = "";
 	}
-	/*~Model() {
-		fclose(picture);
-		fclose(text);
-		fclose(result_picture);
-		fclose(picture1);
-		fclose(picture2);
-	}*/
 
 	void calculate_len_of_text(string path_to_text) {
-		// определение длины текста
+		// метод определения длины текста
+		// param: path_to_text путь к файлу с текстом
 		text = fopen(path_to_text.c_str(), "r");
 		while (!feof(text)) {
 			char a = getc(text);
@@ -47,12 +42,13 @@ public:
 	}
 
 	void create_result_picture() {
-		// создание картинки-результата
+		// метод создания картинки-результата
 		result_picture = fopen("res.bmp", "wb");
 	}
 
 	void calculate_number_of_pixels(string path_to_picture) {
-		// определение количества пикселей в картинке
+		// метод определения количества пикселей в картинке
+		// param: path_to_picture путь к изображению
 		picture = fopen(path_to_picture.c_str(), "rb");
 		fseek(picture, 0, SEEK_END);
 		len_of_picture = ftell(picture);
@@ -61,6 +57,9 @@ public:
 	}
 
 	void hide_in_title(string path_to_picture, string path_to_text) {
+		// метод алгоритма встраивания в заголовок
+		// param: path_to_picture путь к изображению
+		// param: path_to_text путь к файлу с текстом
 		calculate_len_of_text(path_to_text);
 
 		create_result_picture();
@@ -116,7 +115,8 @@ public:
 	}
 
 	void calculate_number_of_bytes(string path_to_picture) {
-		// определение количества байт в картинке
+		// метод определения количества байт в картинке
+		// param: path_to_picture путь к изображению
 		picture = fopen(path_to_picture.c_str(), "rb");
 		fseek(picture, 0, SEEK_END);
 		len_of_picture = ftell(picture);
@@ -124,6 +124,8 @@ public:
 	}
 
 	void show_title(string path_to_picture) {
+		// метод вывода заголовка файла
+		// param: path_to_picture путь к изображению
 		calculate_number_of_bytes(path_to_picture);
 
 		bool buf[8], sym[8];
@@ -142,20 +144,9 @@ public:
 	}
 
 	void compare(string path1, string path2) {
-		///*Эта функция сравнивает 2 файла и выводит их отличия*/
-		//FILE* picture1;				// файл-оригинал
-		//string text1;				// его содержимое
-		//FILE* picture2;				// файл, который надо проверить
-		//string text2;				// его содержимое
-
-		//// ввод файлов
-		//string path1, path2;
-		//cout << "Введите название файла 1: " << endl;
-		//cin >> path1;
-		//path1 = "1.bmp";
-		//cout << "Введите название файла 2: " << endl;
-		//cin >> path2;
-		//path2 = "res.bmp";
+		// метод сравнивания двух файлов. Этот метод также выводит отличия
+		// param: path1 путь к первому изображению
+		// param: path2 путь к второму изображению
 		picture1 = fopen(path1.c_str(), "rb");
 		picture2 = fopen(path2.c_str(), "rb");
 
@@ -188,6 +179,9 @@ public:
 	}
 
 	void lsb(string path_to_picture, string path_to_text) {
+		// метод алгоритма lsb
+		// param: path_to_picture путь к изображению
+		// param: path_to_text путь к файлу с текстом
 		calculate_len_of_text(path_to_text);
 
 		create_result_picture();
@@ -251,6 +245,10 @@ public:
 	}
 
 	void show_lsb(string path_to_picture, string path_to_text, int len_of_text) {
+		// метод нахождения текста по алгоритму lsb
+		// param: path_to_picture путь к изображению
+		// param: path_to_text путь к файлу с текстом
+		// param: len_of_text количество символов в тексте
 		calculate_number_of_pixels(path_to_picture);
 
 		// пропуск заголовка
@@ -325,6 +323,10 @@ public:
 	}
 
 	void test_lsb(int* arr, const int n, string text) {
+		// метод для тестирования алгоритма lsb
+		// param: arr массив чисел (байтов)
+		// param: n размер массива
+		// param: text текст, который надо спрятать
 		len_of_text = text.length();
 		int i = 0;
 		while (len_of_text) {
@@ -360,20 +362,25 @@ public:
 
 class Controller {
 private:
-	Model* model;
-	int command1;
-	int command2;
-	string method;
+	Model* model;						// указатель на модель
+	int command1;						// первый выбор команды
+	int command2;						// второй выбор команды
+	string method;						// итоговый метод работы кода
 public:
 	Controller(Model* model) {
+		// конструктор класса
+		// param: model указатель на модель
 		this->model = model;
 	}
 
 	string get_method() {
+		// get-тер для метода работы кода
 		return method;
 	}
 
 	int first_input(string cmd) {
+		// метод проверки и сохранения команды введённой на первом этапе
+		// param: cmd строка, которую ввёл пользователь
 		try {
 			command1 = stoi(cmd);
 			if (command1 < 0 || command1 > 3)
@@ -386,6 +393,8 @@ public:
 	}
 
 	void second_input(string cmd) {
+		// метод проверки и сохранения команды введённой на втором этапе
+		// param: cmd строка, которую ввёл пользователь
 		try {
 			command2 = stoi(cmd);
 			if (command2 < 0 || command2 > 2)
@@ -398,6 +407,7 @@ public:
 	}
 
 	void select_method() {
+		// метод определения метода работы кода
 		if (command1 == 1) {
 			if (command2 == 1)
 				method = "hide_in_title";
@@ -415,6 +425,9 @@ public:
 	}
 
 	void execute(string path1, string path2) {
+		// метод вызова нужного метода модели
+		// param: path1 путь до первого файла
+		// param: path2 путь до второго файла
 		if (method == "hide_in_title")
 			model->hide_in_title(path1, path2);
 		else if (method == "lsb")
@@ -424,10 +437,16 @@ public:
 	}
 
 	void execute(string path_to_picture) {
+		// метод вызова нужного метода модели
+		// param: path_to_picture путь до изображения
 		model->show_title(path_to_picture);
 	}
 
 	void execute(string path_to_picture, string path_to_text, string len_of_text) {
+		// метод вызова нужного метода модели
+		// param: path_to_picture путь до изображения
+		// param: path_to_text путь до файла с текстом
+		// param: len_of_text длина текста
 		model->show_lsb(path_to_picture, path_to_text, stoi(len_of_text));
 	}
 };
@@ -435,18 +454,21 @@ public:
 
 class View {
 private:
-	Controller* controller;
+	Controller* controller;						// указатель на контроллер
 public:
 	View(Controller* controller) {
+		// конструктор класса
+		// param: controller указатель на контроллер
 		this->controller = controller;
 	}
 
 	void prepare() {
+		// метод установки русского языка
 		setlocale(LC_ALL, "rus");
 	}
 
 	void start() {
-		/*Эта функция выводит меню*/
+		// метод вывода первого меню
 		string cmd;
 		cout << "МЕНЮ\n1 - Спрятать текст\n2 - Посмотреть содержимое\n3 - Сравнить с оригиналом\n\nВведите номер команды:\n";
 		cin >> cmd;
@@ -463,6 +485,7 @@ public:
 	}
 
 	void enter_data() {
+		// метод считывания данных
 		string method = controller->get_method();
 		if (method == "hide_in_title" || method == "lsb")
 			enter_files();
@@ -475,7 +498,7 @@ public:
 	}
 
 	void enter_two_pictures() {
-		// ввод файлов
+		// метод ввода данных
 		string path1, path2;
 		cout << "Введите название файла 1: " << endl;
 		cin >> path1;
@@ -487,7 +510,7 @@ public:
 	}
 
 	void enter_file() {
-		// ввод файла
+		// метод ввода данных
 		string path_to_picture;
 		cout << "Введите название файла (картинка):" << endl;
 		cin >> path_to_picture;
@@ -496,7 +519,7 @@ public:
 	}
 
 	void enter_file_with_length() {
-		// пути к файлам 
+		// метод ввода данных 
 		string path_to_picture, path_to_text, len_of_text;
 		cout << "Введите название файла (картинка):\n";
 		cin >> path_to_picture;
@@ -507,7 +530,7 @@ public:
 	}
 
 	void enter_files() {
-		// ввод файлов
+		// метод ввода данных
 		string path_to_picture, path_to_text;
 		cout << "Введите название файла (картинка):\n";
 		cin >> path_to_picture;
@@ -519,10 +542,12 @@ public:
 	}
 
 	void error_message() {
+		// метод вывода ошибки
 		cout << "Такой команды нет" << endl;
 	}
 
 	void show_menu1() {
+		// метод вывода второго меню
 		string cmd;
 		cout << "1 - Метод встраивания в заголовок\n2 - Метод LSB\n\nВведите номер команды:\n";
 		cin >> cmd;
@@ -530,6 +555,7 @@ public:
 	}
 
 	void show_menu2() {
+		// метод вывода второго меню
 		string cmd;
 		cout << "1 - Методом встраивания в заголовок\n2 - Методом LSB\n\nВведите номер команды:\n";
 		cin >> cmd;
@@ -537,6 +563,7 @@ public:
 	}
 
 	void show_menu3() {
+		// метод вывода второго меню
 		controller->second_input("");
 	}
 };

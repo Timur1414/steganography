@@ -389,9 +389,29 @@ TEST(test2, lsb) {
 	EXPECT_NE(oss.str(), "Файлы одинаковые");
 }
 
-//TEST(test1, hide_in_title) {
-//	EXPECT_EQ(1, 1);
-//}
+TEST(test1, hide_in_title) {
+	EXPECT_EQ(1, 1);
+}
+
+TEST(test1, a) {
+	EXPECT_EQ(1, 1);
+}
+
+TEST(test1, b) {
+	EXPECT_EQ(1, 1);
+}
+
+TEST(test1, c) {
+	EXPECT_EQ(1, 1);
+}
+
+TEST(test1, d) {
+	EXPECT_EQ(1, 1);
+}
+
+TEST(test1, e) {
+	EXPECT_EQ(1, 1);
+}
 
 TEST(test2, hide_in_title) {
 	Model model;
